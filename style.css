@@ -1,0 +1,24 @@
+  .cover, .slidev-page-8 {
+    background-position: right !important;
+    background-size: contain !important;
+    background-image: url("/cover-background.png") !important;
+    background-repeat: no-repeat;
+    color: black !important;
+  }
+
+  .slidev-page-3,
+  .slidev-page-6,
+  .slidev-page-26,
+  .slidev-page-32,
+  .slidev-page-33 {
+    background-position: right bottom;
+    background-size: 60%;
+    background-image: url("/slide-background.png");
+    background-repeat: no-repeat;
+  }
+
+  .slidev-page-34 {
+    background: url("/gradient-backgound.png") center top no-repeat, rgb(38, 33, 61) url("/vertical-stripes-bright.png") right no-repeat !important;
+    background-size: contain !important;
+    color: white !important;
+  }

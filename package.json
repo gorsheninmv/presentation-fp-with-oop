@@ -1,0 +1,18 @@
+{
+  "name": "fp-and-oop",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export --with-clicks --timeout 60000"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.42.5",
+    "@slidev/theme-default": "^0.21.2",
+    "@slidev/theme-seriph": "latest",
+    "slidev-theme-eloc": "^1.0.1"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.35.1"
+  }
+}
