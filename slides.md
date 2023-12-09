@@ -39,7 +39,7 @@ title: FP with OOP
 
 # Обо мне
 
-- Последние 3 года работаю в компании Directum
+- Последние 3.5 года работаю в компании Directum
 - Платформа для интеллектуальной системы управления документооборотом и цифровыми процессами
 - Основной стек: C# и Typescript
 - Интересуюсь ФП
@@ -121,55 +121,17 @@ Tony Hoare introduced Null references in ALGOL W back in 1965 "simply because it
 - Null references have historically been a bad idea
 - Programming language designers should be responsible for the errors in programs written in that language
 
+
 ---
+clicks: 5
+---
+# Надо было судить не по словам, а по делам (с)
 
-# NullReferenceException
+<Timeline />
 
-<div class="grid grid-cols-[1fr_2fr] gap-4">
-<div class="flex flex-col justify-center">
-```csharp {all|3} {lines:true}
-private void ConvertParameters(Foo foo)
-{
-  foreach (var parameter in foo.Parameters)
-  {
-    this.ConvertParameter(parameter);
-  }
-}
-```
-</div>
-<div>
-<v-click>
-
-```csharp {all|3,8-11,17,18} {lines:true}
-public class Foo : FooBase
-{
-  public Collection<Bar> Parameters { get; set; }
-
-  public override object Clone()
-  {
-    var clone = base.Clone() as Foo;
-    if (this.Parameters != null)
-      this.Parameters = new Collection<Bar>(this.Parameters
-        .Select(v => v.Clone() as Bar)
-        .ToList());
-    return clone;
-  }
-
-  public override object DoSmth(string fizz, params object[] buzz)
-  {
-    if (this.Parameters == null)
-      return Array.Empty<object>()
-    var result = new List<object>();
-    foreach (var parameter in this.Parameters)
-      result.Add(parameter.DoSmth(fizz, buzz));
-    return result.ToArray();
-  }
-}
-
-```
-</v-click>
-</div>
-</div>
+<v-clicks at="4">
+    <img class="inline-block -translate-y-25 translate-x-50 scale-60" src="/reddit-go.png">
+</v-clicks>
 
 ---
 
@@ -233,31 +195,15 @@ public bool TryGetFoo(Bar bar, out Foo foo);
 
 ---
 
+# Где-то в параллельной вселенной
 
-# Null reference types (C# 8.0)
+<Timeline showall=true />
 
-```csharp
-class User
-{
-  string Name { get; set; }
-  string? MiddleName { get; set; }
-}
-```
-
-<br />
-<br />
-
-\+ Статический анализ
-
-<br />
-
-\- После включения получаем много ошибок в проекте  
-\- В библиотеках может быть отключено, но наш код будет считать, что все ок  
-\- Можно отключить через null-forgiving синтаксис
+<FpTimeline />
 
 ---
 
-# А что в ФП?
+# Option
 
 ```fsharp {all} {lines:true}
 // F#
@@ -652,6 +598,7 @@ public static Maybe<Foo> GetFoo()
 </div>
 </div>
 
+<Tweet v-click id="1681255843193319424" scale="0.9" class="absolute top-0 right-0" />
 ---
 
 # Для чего нужна монада
@@ -798,55 +745,6 @@ public readonly struct Option<A> :
 I often see this phrase pulled out when people are sharing lang-ext on twitter, or if the project ends up on Reddit, or on the front page of Hacker News.  It's as though the person writing it assumes all programmers are working on greenfield projects and have total freedom to write in whatever language they like.  In which case, why not Haskell?  It's better than C# and F# combined.
 
 The reason I wrote this project is because I am the CTO of a software company in London, and we have a project that's well into 15 years of development.  It is a C# project and it is now enormous.
-
----
-
-# Модифицированный пример
-
-<div class="grid grid-cols-[1fr_2fr] gap-4">
-<div class="flex flex-col justify-center">
-```csharp {all} {lines:true}
-private void ConvertFoo(Foo foo)
-{
-  foo.Parameters.Do(ps => {
-    foreach (var parameter in ps)
-    {
-      this.ConvertBar(parameter);
-    }
-  });
-}
-```
-</div>
-<div>
-
-```csharp {all} {lines:true}
-public class Foo : FooBase
-{
-  public Option<Collection<Bar>> Parameters { get; set; }
-
-  public override object Clone()
-  {
-    var clone = base.Clone() as Foo;
-    clone.Parameters = this.Parameters.Match(
-      Some: ps => new Collection<Bar>(ps.Select(v => v.Clone() as Bar)
-        .ToList()),
-      None: Option<Collection<Foo>>.None
-    );
-    return clone;
-  }
-
-  public override object DoSmth(string fizz, params object[] buzz)
-  {
-    return this.Parameters.Match(
-      Some: parameters => parameters.Select(p => p.DoSmth(fizz, buzz))
-        .ToArray(),
-      None: Array.Empty<object>());
-  }
-}
-
-```
-</div>
-</div>
 
 ---
 
